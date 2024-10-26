@@ -1,9 +1,19 @@
-package com.gamesstore.gamestoreweb;
+package com.gamesstore.gamestoreweb.models;
 
 
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Game {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     private String title;
     private String genre;
     private double price;

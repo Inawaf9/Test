@@ -1,7 +1,8 @@
-package com.gamesstore.controllers;
+package com.gamesstore.gamestoreweb.controllers;
 
-import com.gamesstore.gamestoreweb.Game;
-import com.gamesstore.repositories.GameRepository;
+
+import com.gamesstore.gamestoreweb.models.Game;
+import com.gamesstore.gamestoreweb.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
