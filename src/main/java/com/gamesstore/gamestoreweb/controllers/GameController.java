@@ -1,6 +1,5 @@
 package com.gamesstore.gamestoreweb.controllers;
 
-
 import com.gamesstore.gamestoreweb.models.Game;
 import com.gamesstore.gamestoreweb.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +30,31 @@ public class GameController {
         return gameRepository.findAll();
     }
 
+    // عرض نموذج إضافة لعبة جديدة
+    @GetMapping("/add")
+    public String showAddGameForm(Model model) {
+        model.addAttribute("game", new Game()); // إنشاء كائن Game جديد
+        return "addGame"; // اسم الملف HTML لإضافة اللعبة
+    }
+
     // إضافة لعبة جديدة
     @PostMapping
-    public Game addGame(@RequestBody Game game) {
+    public Game addGame(@ModelAttribute Game game) {
         return gameRepository.save(game);
+    }
+
+    // عرض نموذج تحديث لعبة موجودة
+    @GetMapping("/update/{id}")
+    public String showUpdateGameForm(@PathVariable Long id, Model model) {
+        Game game = gameRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid game Id:" + id));
+        model.addAttribute("game", game);
+        return "updateGame"; // اسم الملف HTML لتحديث اللعبة
     }
 
     // تحديث لعبة موجودة
     @PutMapping("/{id}")
-    public Game updateGame(@PathVariable Long id, @RequestBody Game updatedGame) {
+    public Game updateGame(@PathVariable Long id, @ModelAttribute Game updatedGame) {
         return gameRepository.findById(id).map(game -> {
             game.setTitle(updatedGame.getTitle());
             game.setGenre(updatedGame.getGenre());
@@ -59,3 +74,4 @@ public class GameController {
         gameRepository.deleteById(id);
     }
 }
+

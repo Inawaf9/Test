@@ -7,6 +7,7 @@
 </head>
 <body>
 <h1>Available Games</h1>
+<a href="/games/add">Add New Game</a> <!-- رابط لإضافة لعبة جديدة -->
 <table>
     <thead>
     <tr>
@@ -15,6 +16,7 @@
         <th>Price</th>
         <th>Developer</th>
         <th>Release Date</th>
+        <th>Actions</th> <!-- إضافة عمود للإجراءات -->
     </tr>
     </thead>
     <tbody>
@@ -24,6 +26,9 @@
         <td th:text="${game.price}">Game Price</td>
         <td th:text="${game.developer}">Game Developer</td>
         <td th:text="${game.releaseDate}">Release Date</td>
+        <td>
+            <a th:href="@{/games/update/{id}(id=${game.id})}">Update</a> <!-- رابط لتحديث اللعبة -->
+        </td>
     </tr>
     </tbody>
 </table>
