@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Game Store</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Games</title>
 </head>
 <body>
 <h1>Available Games</h1>
-<a href="/games/add">Add New Game</a> <!-- رابط لإضافة لعبة جديدة -->
+<a href="/games/add">Add New Game</a>
 <table>
     <thead>
     <tr>
@@ -16,7 +14,7 @@
         <th>Price</th>
         <th>Developer</th>
         <th>Release Date</th>
-        <th>Actions</th> <!-- إضافة عمود للإجراءات -->
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -27,7 +25,10 @@
         <td th:text="${game.developer}">Game Developer</td>
         <td th:text="${game.releaseDate}">Release Date</td>
         <td>
-            <a th:href="@{/games/update/{id}(id=${game.id})}">Update</a> <!-- رابط لتحديث اللعبة -->
+            <a th:href="@{/games/update/{id}(id=${game.id})}">Update</a>
+            <form th:action="@{/games/delete/{id}(id=${game.id})}" method="post" style="display:inline;">
+                <button type="submit">Delete</button>
+            </form>
         </td>
     </tr>
     </tbody>

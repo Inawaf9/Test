@@ -3,9 +3,13 @@ package com.gamesstore.gamestoreweb.controllers;
 import com.gamesstore.gamestoreweb.models.Game;
 import com.gamesstore.gamestoreweb.repositories.GameRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -13,50 +17,66 @@ import java.util.List;
 @RequestMapping("/games")
 public class GameController {
 
-    @Autowired
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    // نقطة نهاية لعرض جميع الألعاب في واجهة المستخدم
+    @Autowired
+    public GameController(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
+
+    // Display all games (View)
     @GetMapping
     public String getAllGames(Model model) {
         List<Game> games = gameRepository.findAll();
         model.addAttribute("games", games);
-        return "games"; // اسم ملف HTML بدون .html
+        return "games"; // Thymeleaf template name
     }
 
-    // استرجاع جميع الألعاب (API)
-    @GetMapping("/api")
-    public List<Game> getAllGamesApi() {
-        return gameRepository.findAll();
-    }
-
-    // عرض نموذج إضافة لعبة جديدة
+    // Show form to add a new game
     @GetMapping("/add")
     public String showAddGameForm(Model model) {
-        model.addAttribute("game", new Game()); // إنشاء كائن Game جديد
-        return "addGame"; // اسم الملف HTML لإضافة اللعبة
+        model.addAttribute("game", new Game());
+        return "addGame";
     }
 
-    // إضافة لعبة جديدة
-    @PostMapping
-    public Game addGame(@ModelAttribute Game game) {
-        return gameRepository.save(game);
+    // Handle the form submission for adding a new game
+    @PostMapping("/add")
+    public String addGame(@Validated @ModelAttribute Game game, BindingResult result) {
+        if (result.hasErrors()) {
+            return "addGame"; // Return to form with validation errors
+        }
+        gameRepository.save(game);
+        return "redirect:/games";
     }
 
-    // عرض نموذج تحديث لعبة موجودة
+    // Show form to update an existing game by ID
     @GetMapping("/update/{id}")
     public String showUpdateGameForm(@PathVariable Long id, Model model) {
         Game game = gameRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid game Id:" + id));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found with ID: " + id));
         model.addAttribute("game", game);
-        return "updateGame"; // اسم الملف HTML لتحديث اللعبة
+        return "updateGame";
     }
 
-    // تحديث لعبة موجودة
-    @PostMapping("/{id}")
-    public String updateGame(@PathVariable Long id, @ModelAttribute Game updatedGame) {
-        updatedGame.setId(id); // تعيين المعرف للعبة المحدثة
-        gameRepository.save(updatedGame); // حفظ اللعبة المحدثة
-        return "redirect:/games"; // إعادة التوجيه إلى قائمة الألعاب بعد التحديث
+    // Handle the form submission for updating an existing game
+    @PostMapping("/update/{id}")
+    public String updateGame(@PathVariable Long id, @Validated @ModelAttribute Game updatedGame, BindingResult result) {
+        if (result.hasErrors()) {
+            updatedGame.setId(id);
+            return "updateGame"; // Return to form with validation errors
+        }
+        updatedGame.setId(id);
+        gameRepository.save(updatedGame);
+        return "redirect:/games";
+    }
+
+    // Delete a game by ID
+    @PostMapping("/delete/{id}")
+    public String deleteGame(@PathVariable Long id) {
+        if (!gameRepository.existsById(id)) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Game not found with ID: " + id);
+        }
+        gameRepository.deleteById(id);
+        return "redirect:/games";
     }
 }

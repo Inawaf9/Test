@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class GameStoreWebApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(GameStoreWebApplication.class, args);
     }
 

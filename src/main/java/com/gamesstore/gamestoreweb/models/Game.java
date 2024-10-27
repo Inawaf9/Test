@@ -1,38 +1,36 @@
 package com.gamesstore.gamestoreweb.models;
 
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 @Entity
 public class Game {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use IDENTITY for H2 auto-increment
     private Long id;
 
+    @NotBlank(message = "Title is required")
     private String title;
+
+    @NotBlank(message = "Genre is required")
     private String genre;
+
+    @NotNull(message = "Price is required")
+    @Min(value = 0, message = "Price must be greater than or equal to 0")
     private double price;
+
+    @NotBlank(message = "Developer is required")
     private String developer;
+
+    @NotBlank(message = "Release date is required")
     private String releaseDate;
-
-    // Constructors, getters, setters, etc.
-
-    public Game() {
-    }
-
-    public Game(Long id, String title, String genre, double price, String developer, String releaseDate) {
-        this.id = id;
-        this.title = title;
-        this.genre = genre;
-        this.price = price;
-        this.developer = developer;
-        this.releaseDate = releaseDate;
-    }
 
     // Getters and Setters
     public Long getId() {
@@ -83,4 +81,3 @@ public class Game {
         this.releaseDate = releaseDate;
     }
 }
-
