@@ -6,7 +6,9 @@
 </head>
 <body>
 <h1>Update Game</h1>
-<form action="#" th:action="@{/games/{id}(id=${game.id})}" th:object="${game}" method="put">
+<form action="#" th:action="@{/games/{id}(id=${game.id})}" th:object="${game}" method="post"> <!-- استخدم POST هنا -->
+    <input type="hidden" name="_method" value="put" /> <!-- حقل مخفي لتحديد طريقة PUT -->
+
     <label for="title">Title:</label>
     <input type="text" id="title" th:field="*{title}" required/>
     <br/>

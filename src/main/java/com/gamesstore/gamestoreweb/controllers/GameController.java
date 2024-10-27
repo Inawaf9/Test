@@ -53,25 +53,10 @@ public class GameController {
     }
 
     // تحديث لعبة موجودة
-    @PutMapping("/{id}")
-    public Game updateGame(@PathVariable Long id, @ModelAttribute Game updatedGame) {
-        return gameRepository.findById(id).map(game -> {
-            game.setTitle(updatedGame.getTitle());
-            game.setGenre(updatedGame.getGenre());
-            game.setPrice(updatedGame.getPrice());
-            game.setDeveloper(updatedGame.getDeveloper());
-            game.setReleaseDate(updatedGame.getReleaseDate());
-            return gameRepository.save(game);
-        }).orElseGet(() -> {
-            updatedGame.setId(id);
-            return gameRepository.save(updatedGame);
-        });
-    }
-
-    // حذف لعبة
-    @DeleteMapping("/{id}")
-    public void deleteGame(@PathVariable Long id) {
-        gameRepository.deleteById(id);
+    @PostMapping("/{id}")
+    public String updateGame(@PathVariable Long id, @ModelAttribute Game updatedGame) {
+        updatedGame.setId(id); // تعيين المعرف للعبة المحدثة
+        gameRepository.save(updatedGame); // حفظ اللعبة المحدثة
+        return "redirect:/games"; // إعادة التوجيه إلى قائمة الألعاب بعد التحديث
     }
 }
-
