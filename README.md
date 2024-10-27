@@ -1,1 +1,1 @@
-Best GameStore
+Best GamesStore
