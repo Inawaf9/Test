@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Update Game</h1>
-<form th:action="@{/games/update/{id}(id=${game.id})}" th:object="${game}" method="post">
+<form th:action="@{/admin/update/{id}(id=${game.id})}" th:object="${game}" method="post">
     <input type="hidden" name="_method" value="put" />
 
     <label for="title">Title:</label>
@@ -29,8 +29,13 @@
     <input type="date" id="releaseDate" th:field="*{releaseDate}" required/>
     <br/>
 
+    <label for="imageUrl">Image URL:</label>
+    <input type="text" id="imageUrl" th:field="*{imageUrl}" placeholder="Enter image URL" />
+    <br/>
+
     <button type="submit">Update Game</button>
 </form>
-<a href="/games">Back to Games</a>
+
+<a href="/admin">Back to Games</a>
 </body>
 </html>

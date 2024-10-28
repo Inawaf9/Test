@@ -1,0 +1,16 @@
+<!-- purchaseGame.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Purchase Game</title>
+</head>
+<body>
+<h1>Purchase Game</h1>
+<div>
+    <img th:if="${game.imageUrl}" th:src="${game.imageUrl}" alt="Game Image" style="width: 200px; height: auto;" />
+</div>
+<p><strong>Title:</strong> <span th:text="${game.title}">Game Title</span></p>
+<p><strong>Price:</strong> $<span th:text="${game.price}">Game Price</span></p>
+<a href="/confirm">Confirm Purchase</a>
+</body>
+</html>

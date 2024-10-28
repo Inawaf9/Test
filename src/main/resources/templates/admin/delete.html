@@ -14,9 +14,9 @@
     <p><strong>Price:</strong> <span th:text="${game.price}"></span></p>
 </div>
 
-<form th:action="@{/games/delete/{id}(id=${game.id})}" method="post">
+<form th:action="@{/admin/delete/{id}(id=${game.id})}" method="post"> <!-- Updated action URL -->
     <button type="submit">Confirm Delete</button>
-    <a href="/games">Cancel</a>
+    <a href="/admin">Cancel</a> <!-- Updated cancel link -->
 </form>
 
 </body>

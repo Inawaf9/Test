@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Game Store</title>
+</head>
+<body>
+<h1>Game Store</h1>
+
+<div th:if="${games.isEmpty()}">No games available.</div>
+<div th:unless="${games.isEmpty()}">
+  <table>
+    <thead>
+    <tr>
+      <th>Image</th>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Price</th>
+      <th>Developer</th>
+      <th>Release Date</th>
+      <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="game : ${games}">
+      <td>
+        <img th:src="${game.imageUrl}" alt="Game Image" style="width: 100px; height: auto;" th:if="${game.imageUrl != null}"/>
+      </td>
+      <td th:text="${game.title}">Game Title</td>
+      <td th:text="${game.genre}">Genre</td>
+      <td th:text="${game.price}">Price</td>
+      <td th:text="${game.developer}">Developer</td>
+      <td th:text="${game.releaseDate}">Release Date</td>
+      <td>
+        <a th:href="@{/details/{id}(id=${game.id})}">View Details</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<a href="/admin">Admin Panel</a>
+</body>
+</html>

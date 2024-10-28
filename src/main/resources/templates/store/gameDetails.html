@@ -1,0 +1,18 @@
+<!-- gameDetails.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Game Details</title>
+</head>
+<body>
+<h1 th:text="${game.title}">Game Title</h1>
+<div>
+    <img th:if="${game.imageUrl}" th:src="${game.imageUrl}" alt="Game Image" style="width: 200px; height: auto;" />
+</div>
+<p><strong>Genre:</strong> <span th:text="${game.genre}">Genre</span></p>
+<p><strong>Developer:</strong> <span th:text="${game.developer}">Developer</span></p>
+<p><strong>Price:</strong> $<span th:text="${game.price}">Price</span></p>
+<p><strong>Release Date:</strong> <span th:text="${game.releaseDate}">Release Date</span></p>
+<a th:href="@{/purchase/{id}(id=${game.id})}">Purchase</a>
+</body>
+</html>
