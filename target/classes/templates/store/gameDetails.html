@@ -1,0 +1,35 @@
+<!-- gameDetails.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-8">
+<div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+    <!-- Game Title -->
+    <h1 th:text="${game.title}" class="text-3xl font-bold text-blue-600 mb-4">Game Title</h1>
+
+    <!-- Game Image -->
+    <div class="mb-6">
+        <img th:if="${game.imageUrl}" th:src="${game.imageUrl}" alt="Game Image"
+             class="w-full h-auto rounded-lg"/>
+    </div>
+
+    <!-- Game Details -->
+    <p class="mb-2"><strong class="text-gray-700">Genre:</strong> <span th:text="${game.genre}" class="text-gray-900">Genre</span></p>
+    <p class="mb-2"><strong class="text-gray-700">Developer:</strong> <span th:text="${game.developer}" class="text-gray-900">Developer</span></p>
+    <p class="mb-2"><strong class="text-gray-700">Price:</strong> $<span th:text="${game.price}" class="text-gray-900">Price</span></p>
+    <p class="mb-4"><strong class="text-gray-700">Release Date:</strong> <span th:text="${game.releaseDate}" class="text-gray-900">Release Date</span></p>
+
+    <!-- Purchase Button -->
+    <a th:href="@{/purchase/{id}(id=${game.id})}"
+       class="block py-2 px-4 bg-green-500 text-white rounded font-bold text-center hover:bg-green-600 transition-all">
+        Purchase
+    </a>
+</div>
+</body>
+</html>

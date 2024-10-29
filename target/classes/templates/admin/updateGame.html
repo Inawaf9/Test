@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen p-8">
+<div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+    <!-- Page Title -->
+    <h1 class="text-3xl font-bold text-blue-600 mb-6">Update Game</h1>
+
+    <!-- Update Game Form -->
+    <form th:action="@{/admin/update/{id}(id=${game.id})}" th:object="${game}" method="post" class="space-y-4">
+        <input type="hidden" name="_method" value="put" />
+
+        <div>
+            <label for="title" class="block text-gray-700 font-bold mb-2">Title:</label>
+            <input type="text" id="title" th:field="*{title}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="genre" class="block text-gray-700 font-bold mb-2">Genre:</label>
+            <input type="text" id="genre" th:field="*{genre}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="price" class="block text-gray-700 font-bold mb-2">Price:</label>
+            <input type="number" id="price" th:field="*{price}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="developer" class="block text-gray-700 font-bold mb-2">Developer:</label>
+            <input type="text" id="developer" th:field="*{developer}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="releaseDate" class="block text-gray-700 font-bold mb-2">Release Date:</label>
+            <input type="date" id="releaseDate" th:field="*{releaseDate}" required
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <div>
+            <label for="imageUrl" class="block text-gray-700 font-bold mb-2">Image URL:</label>
+            <input type="text" id="imageUrl" th:field="*{imageUrl}" placeholder="Enter image URL"
+                   class="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+        </div>
+
+        <button type="submit"
+                class="w-full py-2 px-4 bg-blue-500 text-white rounded font-bold hover:bg-blue-600 transition-all">
+            Update Game
+        </button>
+    </form>
+
+    <!-- Back to Games Link -->
+    <a href="/admin"
+       class="block mt-4 text-center py-2 px-4 bg-gray-500 text-white rounded font-bold hover:bg-gray-600 transition-all">
+        Back to Games
+    </a>
+</div>
+</body>
+</html>
