@@ -10,7 +10,6 @@ in termeinal:
 ```bash
   sudo chmod 666 /var/run/docker.sock
 ```
-
 - localhost:8080 => jenkins page 
 
 - localhost:8090 => store page
