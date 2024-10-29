@@ -1,36 +1,73 @@
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Genre</th>
-        <th>Price</th>
-        <th>Developer</th>
-        <th>Release Date</th>
-        <th>Image</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="game : ${games}">
-        <td th:text="${game.id}"></td>
-        <td th:text="${game.title}"></td>
-        <td th:text="${game.genre}"></td>
-        <td th:text="${game.price}"></td>
-        <td th:text="${game.developer}"></td>
-        <td th:text="${game.releaseDate}"></td>
-        <td>
-            <img th:src="${game.imageUrl}" alt="Game Image" style="width: 100px; height: auto;"/>
-        </td>
-        <td>
-            <a th:href="@{/admin/update/{id}(id=${game.id})}">Edit</a>
-            <form th:action="@{/admin/delete/{id}(id=${game.id})}" method="post" style="display:inline;">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a href="/admin/add">Add New Game</a>
-<hr>
-<a href="/">Store</a>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Store</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- يمكنك تعديل الرابط ليتوافق مع ملف CSS الخاص بك -->
+</head>
+
+<body class="bg-gray-100">
+<div class="min-h-screen flex flex-col items-center justify-center p-8">
+    <!-- Page Title -->
+    <h1 class="text-4xl font-bold text-blue-600 mb-8">Games List</h1>
+
+    <!-- Add New Game Button -->
+    <a href="/admin/add" class="mb-6 py-2 px-6 bg-green-500 text-white rounded font-bold hover:bg-green-600 transition-all">
+        Add New Game
+    </a>
+
+    <!-- Games Table -->
+    <div class="w-full max-w-4xl overflow-x-auto">
+        <table class="min-w-full bg-white border border-gray-300 rounded-lg">
+            <thead class="bg-gray-200">
+            <tr>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center">ID</th>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center">Title</th>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center">Genre</th>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center">Price</th>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center">Developer</th>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center whitespace-nowrap">Release Date</th>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center">Image</th>
+                <th class="py-3 px-4 border-b-2 border-gray-300 text-center">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="game : ${games}" class="hover:bg-gray-100">
+                <td class="py-2 px-4 border-b border-gray-300 text-center" th:text="${game.id}" style="vertical-align: middle;"></td>
+                <td class="py-2 px-4 border-b border-gray-300 text-center" th:text="${game.title}" style="vertical-align: middle;"></td>
+                <td class="py-2 px-4 border-b border-gray-300 text-center" th:text="${game.genre}" style="vertical-align: middle;"></td>
+                <td class="py-2 px-4 border-b border-gray-300 text-center" th:text="${game.price}" style="vertical-align: middle;"></td>
+                <td class="py-2 px-4 border-b border-gray-300 text-center" th:text="${game.developer}" style="vertical-align: middle;"></td>
+                <td class="py-2 px-4 border-b border-gray-300 text-center" th:text="${game.releaseDate}" style="vertical-align: middle;"></td>
+
+                <td class="py-2 px-4 border-b border-gray-300">
+                    <img th:src="${game.imageUrl}" alt="Game Image" style="width: 100px; height: auto;" class="rounded-lg"/>
+                </td>
+                <td class="py-2 px-4 border-b border-gray-300">
+                    <div class="flex space-x-2">
+                        <a th:href="@{/admin/update/{id}(id=${game.id})}"
+                           class="py-2 px-4 bg-blue-500 text-white rounded font-bold hover:bg-blue-600 transition-all flex items-center justify-center">
+                            Edit
+                        </a>
+                        <form th:action="@{/admin/delete/{id}(id=${game.id})}" method="post" class="flex items-center justify-center">
+                            <button type="submit"
+                                    class="py-2 px-4 bg-red-500 text-white rounded font-bold hover:bg-red-600 transition-all">
+                                Delete
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <hr class="my-8 w-full border-gray-300"/>
+    <a href="/" class="py-2 px-6 bg-gray-500 text-white rounded font-bold hover:bg-gray-600 transition-all">
+        Store
+    </a>
+</div>
+</body>
+</html>
