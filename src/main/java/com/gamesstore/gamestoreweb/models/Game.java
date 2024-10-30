@@ -33,6 +33,20 @@ public class Game {
 
     private String imageUrl; // New field for image URL
 
+    // Constructor that accepts all fields except the ID
+    public Game(String title, String genre, double price, String developer, String releaseDate, String imageUrl) {
+        this.title = title;
+        this.genre = genre;
+        this.price = price;
+        this.developer = developer;
+        this.releaseDate = releaseDate;
+        this.imageUrl = imageUrl;
+    }
+
+    // Default constructor (required by JPA)
+    public Game() {
+    }
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
