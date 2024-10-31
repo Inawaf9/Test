@@ -1,0 +1,56 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Pre-Cleanup') {
+            steps {
+                script {
+                    // Kill any process using port 8090 to avoid "port is already allocated" errors
+                    sh 'fuser -k 8090/tcp || true'
+                }
+            }
+        }
+
+        stage('Checkout Code') {
+            steps {
+                // Checkout code from GitHub repository
+                git url: 'https://github.com/Inawaf9/Test.git'
+            }
+        }
+
+        stage('Run Maven Tests') {
+            steps {
+                // Run Maven tests
+                sh 'mvn clean test package'
+            }
+        }
+
+        stage('Cleanup Existing Docker Container') {
+            steps {
+                script {
+                    // Stop and remove the existing Docker container if it exists
+                    sh '''
+                        if [ "$(docker ps -aq -f name=myapp_container)" ]; then
+                            docker stop myapp_container
+                            docker rm myapp_container
+                        fi
+                    '''
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                // Build the Docker image
+                sh 'docker build -t myapp:latest .'
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                // Run the Docker container on port 8090
+                sh 'docker run -d --name myapp_container -p 8090:8090 myapp:latest'
+            }
+        }
+    }
+}
